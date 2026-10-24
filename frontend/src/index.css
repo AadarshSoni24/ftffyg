@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html { font-family: 'Instrument Sans', Inter, ui-sans-serif, system-ui, sans-serif; color: #15262B; background: #F1EEE7;
+  }
+  h1, h2, h3 { font-optical-sizing: auto; }
+  ::selection { background: #0F5F58; color: #fff; }
+  html { -webkit-font-smoothing: antialiased; }
+  body { overflow-x: hidden; }
+}
+
+@layer components {
+  .num { font-variant-numeric: tabular-nums; }
+  .display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.02em; font-variation-settings: 'SOFT' 50; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #5C6A68; }
+  .label { font-size: 12px; font-weight: 500; color: #5C6A68; }
+  .focus-ring:focus-visible, .seg-btn:focus-visible, .field:focus-visible, .range:focus-visible { outline: 2px solid #0F5F58; outline-offset: 2px; }
+  .seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 2px; background: transparent;
+  }
+  h1, h2, h3 { font-optical-sizing: auto; }
+  ::selection { background: #0F5F58; color: #fff; }
+  html { border: 1px solid #D6D0C2; }
+  .seg-btn { padding: 6px 12px; border-radius: 1px; font-size: 13px; font-weight: 500; color: #5C6A68; transition: background-color 180ms, color 180ms, box-shadow 180ms; white-space: nowrap; }
+  .seg-btn:hover { color: #15262B; }
+  .seg-on { background: #fff; color: #15262B; box-shadow: 0 0 0 1px #D6D0C2; }
+  .field { height: 36px; border-radius: 9px; border: 1px solid #D6D0C2; background: #fff; padding: 0 10px; font-size: 13px; color: #15262B; }
+  .range { accent-color: #0F766E; }
+  .tip { position: absolute; top: calc(100% + 8px); z-index: 20; width: 260px; border-radius: 10px; background: #15262B; color: #fff; padding: 8px 12px; font-size: 12px; line-height: 1.45; opacity: 0; pointer-events: none; transform: translateY(-2px); transition: opacity 180ms, transform 180ms; }
+  .group:hover > .tip, .group:focus-within > .tip { opacity: 1; transform: none; }
+  .wf-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: wf-draw 1600ms cubic-bezier(.2,.7,.2,1) forwards; }
+}
+
+@keyframes wf-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .wf-line { animation: none; stroke-dashoffset: 0; }
+  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}
