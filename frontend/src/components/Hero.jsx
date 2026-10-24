@@ -122,7 +122,7 @@ export default function Hero({ view, params, onFocus, modeLabel }) {
           <div className="mt-1.5 flex gap-[3px] text-[10px] text-[#5C6A68]">
             {daily.map((day, i) => {
               const isFeb = day.date.startsWith('2026-02')
-              const dayLabel = isFeb ? '1F' : `${Number(day.date.slice(8))}`
+              const dayLabel = isFeb ? '1 Feb' : `${Number(day.date.slice(8))}`
               const isSel = day.date === params.focus
               return (
                 <span

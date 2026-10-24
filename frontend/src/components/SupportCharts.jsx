@@ -57,7 +57,12 @@ export function ErrorHistogram({ view }) {
               <Tooltip isAnimationActive={false} cursor={{ fill: '#15262B', fillOpacity: 0.04 }} content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 const b = payload[0].payload
-                return <div className={box}><p className="font-semibold text-[#15262B]">{signedMw(b.x0)} to {signedMw(b.x1)} MW</p><p className="text-[#5C6A68]">{b.count} half-hours · forecast too {b.mid < 0 ? 'low' : 'high'}</p></div>
+                const rangeLabel = b.overflow === 'low' || b.x0 === -Infinity || b.x0 <= -limit
+                  ? `≤ −${mw(limit)} MW`
+                  : b.overflow === 'high' || b.x1 === Infinity || (b.x0 >= limit)
+                  ? `≥ +${mw(limit)} MW`
+                  : `${signedMw(b.x0)} to ${signedMw(b.x1)} MW`
+                return <div className={box}><p className="font-semibold text-[#15262B]">{rangeLabel}</p><p className="text-[#5C6A68]">{b.count} half-hours · forecast too {b.mid < 0 ? 'low' : 'high'}</p></div>
               }} />
               <Bar dataKey="count" isAnimationActive={false} radius={[3, 3, 0, 0]}>
                 {bins.map((b) => <Cell key={b.mid} fill={b.mid < 0 ? '#7FAE95' : '#D19AA2'} />)}

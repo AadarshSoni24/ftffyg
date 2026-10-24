@@ -3,12 +3,12 @@ import { mw, isoShort } from '../lib/format.js'
 
 function Kpi({ name, value, helper, accent }) {
   return (
-    <div className="flex flex-col gap-2 border-[#E4DFD2] px-5 py-5 max-sm:[&:not(:first-child)]:border-t sm:max-lg:[&:nth-child(2n)]:border-l sm:max-lg:[&:nth-child(n+3)]:border-t lg:[&:not(:first-child)]:border-l">
+    <div className="flex flex-col gap-1.5 border-[#E4DFD2] px-5 py-4 max-sm:[&:not(:first-child)]:border-t sm:max-lg:[&:nth-child(2n)]:border-l sm:max-lg:[&:nth-child(n+3)]:border-t lg:[&:not(:first-child)]:border-l">
       <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-[#5C6A68]">{name}</p>
-      <p className={`display num text-[44px] font-light leading-none ${accent || 'text-[#15262B]'}`}>
+      <p className={`display num text-[40px] font-light leading-none ${accent || 'text-[#15262B]'}`}>
         {value}<span className="ml-1 text-[14px] font-normal text-[#5C6A68]">MW</span>
       </p>
-      <p className="text-[13px] leading-snug text-[#5C6A68]">{helper}</p>
+      <p className="text-[12px] leading-snug text-[#5C6A68]">{helper}</p>
     </div>
   )
 }
@@ -47,7 +47,7 @@ export default function Metrics({ view, params, scopeLabel }) {
 
       <aside className="flex flex-col justify-between gap-4 rounded-[2px] border border-[#D6D0C2] bg-[#EAE6DA] p-5">
         <div>
-          <p className="eyebrow">Sample evaluation summary</p>
+          <p className="text-[11px] font-medium tracking-[0.06em] text-[#5C6A68]">Evaluation summary</p>
           <p className="display mt-3 text-[19px] leading-[1.35] text-[#15262B]">
             Forecasts ran <strong className="num font-semibold">{mw(Math.abs(s.bias))} MW {biasLabel}</strong> on average. 90% of evaluated periods had error ≤ <strong className="num font-semibold">{mw(s.p90)} MW</strong>.
           </p>

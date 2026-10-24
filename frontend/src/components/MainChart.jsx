@@ -58,6 +58,12 @@ export default function MainChart({ view, params, chip, onFocus }) {
   const fStart = dayMs(params.focus)
   const c = view.coverage
   const gaps = [c.noActual && `${c.noActual} without metered actual`, c.noForecast && `${c.noForecast} without an eligible forecast`].filter(Boolean).join(', ')
+  const maxDataVal = Math.max(...view.rows.map((r) => Math.max(r.forecast ?? 0, r.actual ?? 0)), 20000)
+  const yMax = Math.ceil(maxDataVal / 2000) * 2000
+  const yTicks = []
+  for (let v = 0; v <= yMax; v += 5000) yTicks.push(v)
+  if (yTicks[yTicks.length - 1] !== yMax) yTicks.push(yMax)
+
   return (
     <section aria-label="Forecast versus actual wind generation" className="rounded-[2px] border border-[#D6D0C2] bg-[#FBFAF6] p-5 sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -83,7 +89,7 @@ export default function MainChart({ view, params, chip, onFocus }) {
             <CartesianGrid stroke="#E4DFD2" vertical={false} />
             {!single && <ReferenceArea x1={fStart} x2={fStart + DAY} fill="#15262B" fillOpacity={0.04} stroke="none" ifOverflow="hidden" />}
             <XAxis dataKey="t" type="number" scale="time" domain={[start, end]} ticks={ticks} tickFormatter={(t) => (single ? hm(t) : dayShort(t))} tick={{ fill: '#5C6A68', fontSize: 12 }} tickLine={false} axisLine={{ stroke: '#D6D0C2' }} tickMargin={10} />
-            <YAxis domain={[0, 20000]} ticks={[0, 5000, 10000, 15000, 20000]} tickFormatter={(v) => mw(v)} tick={{ fill: '#5C6A68', fontSize: 12 }} tickLine={false} axisLine={false} width={56} allowDataOverflow />
+            <YAxis domain={[0, yMax]} ticks={yTicks} tickFormatter={(v) => mw(v)} tick={{ fill: '#5C6A68', fontSize: 12 }} tickLine={false} axisLine={false} width={56} allowDataOverflow />
             <Tooltip content={<HoverCard />} cursor={{ stroke: '#15262B', strokeOpacity: 0.35, strokeWidth: 1 }} isAnimationActive={false} wrapperStyle={{ outline: 'none' }} />
             <Area dataKey="forecast" type="monotoneX" stroke="none" fill="url(#fc-fill)" connectNulls={false} isAnimationActive={false} activeDot={false} tooltipType="none" />
             <Line dataKey="forecast" type="monotoneX" stroke="#0F766E" strokeWidth={2.25} dot={false} connectNulls={false} isAnimationActive={false} activeDot={{ r: 4, fill: '#0F766E', stroke: '#fff', strokeWidth: 2 }} />
